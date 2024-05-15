@@ -11,12 +11,13 @@ jobs:
     runs-on: ubuntu-latest
     container:
       image: hashicorp/terraform
+      env:
+        AWS_ACCESS_KEY_ID: ${{ secrets.ACCESS_KEY }}
+        AWS_SECRET_ACCESS_KEY: ${{ secrets.SECRET_ACCESS_KEY }}
+        AWS_DEFAULT_REGION: eu-west-1
     steps:
       - id: configure
         run: |
-          export AWS_ACCESS_KEY_ID=${{ secrets.ACCESS_KEY }}
-          export AWS_SECRET_ACCESS_KEY=${{ secrets.SECRET_ACCESS_KEY }}
-          export AWS_DEFAULT_REGION=eu-west-1
           apk add -U --no-cache jq
       - id: checkout
         uses: actions/checkout@v4
