@@ -36,3 +36,8 @@ resource "aws_s3_bucket_acl" "storage_bucket_acl" {
   bucket = aws_s3_bucket.storage_bucket.id
   acl    = "public-read"
 }
+
+resource "aws_s3_bucket_policy" "storage_bucket_policy" {
+  bucket = aws_s3_bucket.storage_bucket.id
+  policy = data.template_file.definitions_s3_policy.template
+}
