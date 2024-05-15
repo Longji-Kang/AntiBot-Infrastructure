@@ -18,6 +18,8 @@ jobs:
           export AWS_SECRET_ACCESS_KEY=${{ secrets.SECRET_ACCESS_KEY }}
           export AWS_DEFAULT_REGION=eu-west-1
           apk add -U --no-cache jq
+      - id: checkout
+        uses: actions/checkout@v4
       - id: tf_init
         run: terraform init
       - id: tf_validate
