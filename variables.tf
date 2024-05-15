@@ -25,3 +25,11 @@ variable "delivery_function_name" {
 variable "delivery_lambda_role_name" {
   type = string
 }
+
+variable "website_bucket_name" {
+  type = string
+}
+
+variable "cloudfront_role_name" {
+  type = string
+}

@@ -11,3 +11,15 @@ data "template_file" "assume_role_lambda" {
         service = "lambda.amazonaws.com"
     }
 }
+
+
+data "template_file" "website_s3_policy" {
+  template = file("${path.module}/policies/s3_website_access.json")
+
+  vars = {
+    s3_arn              = aws_s3_bucket.website_bucket.arn
+    cloudfront_role_arn = aws_cloudfront_origin_access_identity.cloudfront_identity.iam_arn
+    dev_role_arn        = local.dev_role_arn
+    admin_role_arn      = local.admin_arn
+  }
+}
