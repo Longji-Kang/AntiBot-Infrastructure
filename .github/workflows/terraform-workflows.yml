@@ -45,5 +45,5 @@ jobs:
         with:
           name: terraform-plan    
       - id: checkov
-        run: checkov -f ./tfplan.json -o junitxml -o cli || true
+        run: checkov -f ./tfplan.json -o github_failed_only || true
         
