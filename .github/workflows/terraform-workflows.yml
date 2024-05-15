@@ -8,7 +8,9 @@ on:
 
 jobs:
   Terraform_Validate:
-    runs-on: hashicorp/terraform
+    runs-on: ubuntu-latest
+    container:
+      image: hashicorp/terraform
     steps:
       - id: configure
         run: |
@@ -30,7 +32,9 @@ jobs:
           name: terraform-plan
           path: tfplan.json
   Checkov:
-    runs-on: bridgecrew/checkov
+    runs-on: ubuntu-latest
+    container:
+      image: bridgecrew/checkov
     needs: Terraform_Validate
     steps:
       - id: artifact_download
