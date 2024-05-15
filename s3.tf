@@ -1,11 +1,11 @@
 # Definitions storage bucket
 resource "aws_s3_bucket" "storage_bucket" {
-  bucket = var.storage_bucket_name
+  bucket = local.storage_bucket_name
 
   tags = merge(
     local.tags,
     {
-        Name = var.storage_bucket_name
+        Name = local.storage_bucket_name
     }
   )
 }
