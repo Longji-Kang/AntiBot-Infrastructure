@@ -47,7 +47,7 @@ jobs:
       - id: test_dir
         run: |
           ls
-          cd terraform-plan.json
+          cd tfplan.json
           ls        
       # - id: checkov
       #   run: checkov -f terraform-plan/tfplan.json
