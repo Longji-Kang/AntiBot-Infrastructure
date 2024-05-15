@@ -9,3 +9,12 @@ resource "aws_lambda_function" "admin_upload_function" {
 	handler = "lambda.handler"
 	runtime = "python3.12"
 }
+
+resource "aws_lambda_permission" "admin_gateway_permission" {
+	statement_id = "AllowAdminApiGateway"
+	action = "lambda:InvokeFunction"
+	function_name = aws_lambda_function.admin_upload_function.function_name
+	principal = "apigateway.amazonaws.com"
+
+	source_arn = "${aws_api_gateway_rest_api.backend_api.execution_arn}/*/*"
+}

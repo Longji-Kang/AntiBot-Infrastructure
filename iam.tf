@@ -6,3 +6,8 @@ resource "aws_iam_role" "admin_lambda_role" {
 
   tags = local.tags
 }
+
+resource "aws_iam_role_policy_attachment" "lambda_execution_attachment" {
+  role = aws_iam_role.admin_lambda_role.id
+  policy_arn = "arn:aws:iam::aws:policy/service-role/AWSLambdaBasicExecutionRole"
+}

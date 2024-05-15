@@ -47,4 +47,5 @@ resource "aws_s3_object" "admin_lambda_object" {
   bucket = aws_s3_bucket.storage_bucket.id
   key    = local.admin_lambda_code_location
   source = "./lambda_base/code.zip"
+  etag   = filemd5("./lambda_base/code.zip") 
 }
