@@ -8,6 +8,8 @@ resource "aws_s3_bucket" "storage_bucket" {
         Name = local.storage_bucket_name
     }
   )
+
+  force_destroy = true
 }
 
 resource "aws_s3_bucket_ownership_controls" "storage_bucket_object_ownership" {
@@ -46,6 +48,14 @@ resource "aws_s3_bucket_policy" "storage_bucket_policy" {
 resource "aws_s3_object" "admin_lambda_object" {
   bucket = aws_s3_bucket.storage_bucket.id
   key    = local.admin_lambda_code_location
+  source = "./lambda_base/code.zip"
+  etag   = filemd5("./lambda_base/code.zip") 
+}
+
+# Delivery Lambda Empty Code Object
+resource "aws_s3_object" "delivery_lambda_object" {
+  bucket = aws_s3_bucket.storage_bucket.id
+  key    = local.delivery_lambda_code_location
   source = "./lambda_base/code.zip"
   etag   = filemd5("./lambda_base/code.zip") 
 }

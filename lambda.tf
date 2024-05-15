@@ -18,3 +18,24 @@ resource "aws_lambda_permission" "admin_gateway_permission" {
 
 	source_arn = "${aws_api_gateway_rest_api.backend_api.execution_arn}/*/*"
 }
+
+# Delivery API Lambda Function
+resource "aws_lambda_function" "delivery_function" {
+	function_name = "${local.naming_prefix}${var.delivery_function_name}"
+	role          = aws_iam_role.delivery_lambda_role.arn
+
+	s3_bucket 		= "${aws_s3_bucket.storage_bucket.id}"
+	s3_key 				= local.delivery_lambda_code_location
+
+	handler = "lambda.handler"
+	runtime = "python3.12"
+}
+
+resource "aws_lambda_permission" "delivery_gateway_permission" {
+	statement_id = "AllowDeliveryGateway"
+	action = "lambda:InvokeFunction"
+	function_name = aws_lambda_function.delivery_function.function_name
+	principal = "apigateway.amazonaws.com"
+
+	source_arn = "${aws_api_gateway_rest_api.backend_api.execution_arn}/*/*"
+}
