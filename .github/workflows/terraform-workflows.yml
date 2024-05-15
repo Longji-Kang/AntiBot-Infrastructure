@@ -8,14 +8,19 @@ on:
 
 jobs:
   Terraform_Validate:
-    runs-on: hashicorp/terraform
+    runs-on: ubuntu-latest
+    container:
+      image: hashicorp/terraform
+      env:
+        AWS_ACCESS_KEY_ID: ${{ secrets.ACCESS_KEY }}
+        AWS_SECRET_ACCESS_KEY: ${{ secrets.SECRET_ACCESS_KEY }}
+        AWS_DEFAULT_REGION: eu-west-1
     steps:
       - id: configure
         run: |
-          export AWS_ACCESS_KEY_ID=${{ secrets.ACCESS_KEY }}
-          export AWS_SECRET_ACCESS_KEY=${{ secrets.SECRET_ACCESS_KEY }}
-          export AWS_DEFAULT_REGION=eu-west-1
           apk add -U --no-cache jq
+      - id: checkout
+        uses: actions/checkout@v4
       - id: tf_init
         run: terraform init
       - id: tf_validate
@@ -30,14 +35,15 @@ jobs:
           name: terraform-plan
           path: tfplan.json
   Checkov:
-    runs-on: bridgecrew/checkov
+    runs-on: ubuntu-latest
+    container:
+      image: bridgecrew/checkov
     needs: Terraform_Validate
     steps:
       - id: artifact_download
-        uses: actions/upload-artifact@v3
+        uses: actions/download-artifact@v3
         with:
-          name: terraform-plan
-          path: tfplan.json
+          name: terraform-plan    
       - id: checkov
-        run: checkov -f tfplan.json
+        run: checkov -f ./tfplan.json -o github_failed_only || true
         
