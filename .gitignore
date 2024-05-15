@@ -1,2 +1,2 @@
 .terraform*
-plan.json
+plan*
