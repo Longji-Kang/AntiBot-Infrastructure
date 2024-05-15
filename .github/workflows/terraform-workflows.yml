@@ -41,7 +41,7 @@ jobs:
     needs: Terraform_Validate
     steps:
       - id: artifact_download
-        uses: actions/upload-artifact@v3
+        uses: actions/download-artifact@v3
         with:
           name: terraform-plan
           path: tfplan.json
