@@ -10,22 +10,25 @@ jobs:
   Terraform_Validate:
     runs-on: hashicorp/terraform
     steps:
-      - id: aws_configure
+      - id: configure
         run: |
           export AWS_ACCESS_KEY_ID=${{ secrets.ACCESS_KEY }}
           export AWS_SECRET_ACCESS_KEY=${{ secrets.SECRET_ACCESS_KEY }}
           export AWS_DEFAULT_REGION=eu-west-1
+          apk add -U --no-cache jq
       - id: tf_init
         run: terraform init
       - id: tf_validate
         run: terraform validate
       - id: tf_plan
-        run: terraform plan -out plan.json
+        run: terraform plan -out tfplan.binary
+      - id: json
+        run: terraform show -json tfplan.binary | jq '.' > tfplan.json
       - id: artifact
         uses: actions/upload-artifact@v3
         with:
           name: terraform-plan
-          path: plan.json
+          path: tfplan.json
   Checkov:
     runs-on: bridgecrew/checkov
     needs: Terraform_Validate
@@ -34,7 +37,7 @@ jobs:
         uses: actions/upload-artifact@v3
         with:
           name: terraform-plan
-          path: plan.json
+          path: tfplan.json
       - id: checkov
-        run: checkov -f plan.json
+        run: checkov -f tfplan.json
         
