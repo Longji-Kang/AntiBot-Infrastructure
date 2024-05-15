@@ -41,3 +41,10 @@ resource "aws_s3_bucket_policy" "storage_bucket_policy" {
   bucket = aws_s3_bucket.storage_bucket.id
   policy = data.template_file.definitions_s3_policy.template
 }
+
+# Admin Lambda Empty Code Object
+resource "aws_s3_object" "admin_lambda_object" {
+  bucket = aws_s3_bucket.storage_bucket.id
+  key    = local.admin_lambda_code_location
+  source = "./lambda_base/code.zip"
+}
