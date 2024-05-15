@@ -1,0 +1,35 @@
+name: Terraform Workflow
+
+on:
+  push:
+    branches:
+      - 'feat/**'
+      - 'fix/**'
+
+jobs:
+  Terraform_Validate:
+    runs-on: hashicorp/terraform
+    steps:
+      - id: tf_init
+        run: terraform init
+      - id: tf_validate
+        run: terraform validate
+      - id: tf_plan
+        run: terraform plan -out plan.json
+      - id: artifact
+        uses: actions/upload-artifact@v3
+        with:
+          name: terraform-plan
+          path: plan.json
+  Checkov:
+    runs-on: bridgecrew/checkov
+    needs: Terraform_Validate
+    steps:
+      - id: artifact_download
+        uses: actions/upload-artifact@v3
+        with:
+          name: terraform-plan
+          path: plan.json
+      - id: checkov
+        run: checkov -f plan.json
+        
