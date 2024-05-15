@@ -1,0 +1,25 @@
+name: Terraform Apply Workflow
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  Terraform_Apply:
+    runs-on: ubuntu-latest
+    container:
+      image: hashicorp/terraform
+      env:
+        AWS_ACCESS_KEY_ID: ${{ secrets.ACCESS_KEY }}
+        AWS_SECRET_ACCESS_KEY: ${{ secrets.SECRET_ACCESS_KEY }}
+        AWS_DEFAULT_REGION: eu-west-1
+      steps:
+        - id: checkout
+          uses: actions/checkout@v4
+        - id: tf_init
+          run: terraform init
+        - id: terraform_plan
+          run: terraform plan -out plan
+        - id: terraform_apply
+          run: terraform apply plan 
