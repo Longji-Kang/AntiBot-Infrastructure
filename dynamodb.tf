@@ -3,7 +3,12 @@ resource "aws_dynamodb_table" "version_db" {
   billing_mode = "PAY_PER_REQUEST"
 
   range_key = "Version"
-  hash_key = "Url"
+  hash_key = "Id"
+
+  attribute {
+    name = "Id"
+    type = "N"
+  }
 
   attribute {
     name = "Version"
@@ -13,6 +18,12 @@ resource "aws_dynamodb_table" "version_db" {
   attribute {
     name = "Url"
     type = "S"
+  }
+
+  local_secondary_index {
+    name = "UrlIndex"
+    projection_type = "ALL"
+    range_key = "Url"
   }
 
   tags = local.tags

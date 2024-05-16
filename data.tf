@@ -40,4 +40,16 @@ data "template_file" "website_s3_policy" {
 
 data "template_file" "admin_lambda_role_policy" {
   template = file("${path.module}/policies/lambda_execution.json")
+
+  vars = {
+    dynamo_arn = aws_dynamodb_table.version_db.arn
+  }
+}
+
+data "template_file" "delivery_lambda_role_policy" {
+  template = file("${path.module}/policies/delivery_lambda_execution.json")
+
+  vars = {
+    dynamo_arn = aws_dynamodb_table.version_db.arn
+  }
 }

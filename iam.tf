@@ -30,3 +30,8 @@ resource "aws_iam_role_policy_attachment" "delivery_lambda_execution_attachment"
   role = aws_iam_role.delivery_lambda_role.id
   policy_arn = "arn:aws:iam::aws:policy/service-role/AWSLambdaBasicExecutionRole"
 }
+
+resource "aws_iam_role_policy" "delivery_role_policy" {
+  role = aws_iam_role.delivery_lambda_role.id
+  policy = data.template_file.delivery_lambda_role_policy.rendered
+}
