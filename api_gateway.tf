@@ -30,7 +30,9 @@ resource "aws_api_gateway_integration" "admin_api_login_integration" {
 resource "aws_api_gateway_deployment" "admin_api_login_deployment" {
   depends_on = [ 
     aws_api_gateway_method.admin_api_login_method,
-    aws_api_gateway_method.delivery_api_method
+    aws_api_gateway_method.delivery_api_method,
+    aws_api_gateway_integration.admin_api_login_integration,
+    aws_api_gateway_integration.delivery_api_integration
   ]
 
   rest_api_id = aws_api_gateway_rest_api.backend_api.id
