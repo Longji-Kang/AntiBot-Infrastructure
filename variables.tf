@@ -37,3 +37,8 @@ variable "cloudfront_role_name" {
 variable "dynamo_table_name" {
   type = string
 }
+
+variable "admin_pass" {
+  type      = string
+  sensitive = true
+}

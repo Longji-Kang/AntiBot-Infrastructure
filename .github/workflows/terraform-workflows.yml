@@ -15,6 +15,7 @@ jobs:
         AWS_ACCESS_KEY_ID: ${{ secrets.ACCESS_KEY }}
         AWS_SECRET_ACCESS_KEY: ${{ secrets.SECRET_ACCESS_KEY }}
         AWS_DEFAULT_REGION: eu-west-1
+        TF_VAR_admin_pass: ${{ secrets.PASS }}
     steps:
       - id: configure
         run: |
