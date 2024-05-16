@@ -14,6 +14,14 @@ resource "aws_efs_mount_target" "efs_mount" {
   ]   
 }
 
+resource "aws_efs_mount_target" "efs_mount_b" {
+  file_system_id = aws_efs_file_system.efs.id
+  subnet_id = local.priv_subnet_b
+  security_groups = [
+    aws_security_group.efs_sg.id
+  ]   
+}
+
 resource "aws_efs_access_point" "efs_ap" {
   file_system_id = aws_efs_file_system.efs.id
   
