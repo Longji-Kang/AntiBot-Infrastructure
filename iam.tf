@@ -25,3 +25,17 @@ resource "aws_iam_role_policy_attachment" "delivery_lambda_execution_attachment"
   role = aws_iam_role.delivery_lambda_role.id
   policy_arn = "arn:aws:iam::aws:policy/service-role/AWSLambdaBasicExecutionRole"
 }
+
+# API Gateway Role
+resource "aws_iam_role" "api_gateway_role" {
+  name = "${local.naming_prefix}api-gateway-logging-role"
+
+  assume_role_policy = data.template_file.assume_role_apigateway.rendered
+
+  tags = local.tags
+}
+
+resource "aws_iam_role_policy" "api_gateway_policy" {
+  role = aws_iam_role.api_gateway_role.id
+  policy = data.template_file.api_gateway_logging.rendered
+}
