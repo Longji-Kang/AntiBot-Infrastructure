@@ -37,6 +37,8 @@ resource "aws_lambda_function" "admin_upload_function" {
     arn = aws_efs_access_point.efs_ap.arn
     local_mount_path = "/mnt/lambda"
   }
+
+  timeout = 300
 }
 
 resource "aws_lambda_permission" "admin_gateway_permission" {
