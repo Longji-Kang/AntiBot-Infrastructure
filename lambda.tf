@@ -1,7 +1,8 @@
 # Upload and Admin API Lambda functions
 resource "aws_lambda_function" "admin_upload_function" {
   depends_on = [ 
-    aws_efs_mount_target.efs_mount
+    aws_efs_mount_target.efs_mount,
+    aws_efs_mount_target.efs_mount_b
   ]
 
   function_name = "${local.naming_prefix}${var.admin_upload_function_name}"
