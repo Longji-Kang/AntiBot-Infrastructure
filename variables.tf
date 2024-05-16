@@ -33,3 +33,7 @@ variable "website_bucket_name" {
 variable "cloudfront_role_name" {
   type = string
 }
+
+variable "dynamo_table_name" {
+  type = string
+}
