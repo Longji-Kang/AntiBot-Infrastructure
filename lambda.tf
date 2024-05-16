@@ -12,6 +12,8 @@ resource "aws_lambda_function" "admin_upload_function" {
 	environment {
 	  variables = {
 		pass = var.admin_pass
+		s3_bucket = aws_s3_bucket.storage_bucket.id
+		s3_folder = "definitions"
 	  }
 	}
 }
