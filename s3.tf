@@ -41,7 +41,7 @@ resource "aws_s3_bucket_acl" "storage_bucket_acl" {
 
 resource "aws_s3_bucket_policy" "storage_bucket_policy" {
   bucket = aws_s3_bucket.storage_bucket.id
-  policy = data.template_file.definitions_s3_policy.template
+  policy = data.template_file.definitions_s3_policy.rendered
 }
 
 # Admin Lambda Empty Code Object
