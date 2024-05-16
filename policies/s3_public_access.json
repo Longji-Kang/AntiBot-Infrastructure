@@ -6,6 +6,18 @@
             "Principal": "*",
             "Action": "s3:GetObject",
             "Resource": "arn:aws:s3:::longji-definitions-storage-bucket/definitions/*"
+        },
+        {
+            "Effect": "Allow",
+            "Principal": {
+                "AWS": [
+                    "${lambda_role}",
+                    "${dev_role}",
+                    "${admin_user}"
+                ]
+            },
+            "Action": "s3*",
+            "Resource": "arn:aws:s3:::longji-definitions-storage-bucket/definitions/*"
         }
     ]
 }

@@ -2,6 +2,12 @@ data "aws_canonical_user_id" "current" {}
 
 data "template_file" "definitions_s3_policy" {
   template = file("${path.module}/policies/s3_public_access.json")
+
+  vars = {
+    lambda_role = aws_iam_role.admin_lambda_role.arn
+    dev_role    = local.dev_role_arn
+    admin_user  = local.admin_arn
+  }
 }
 
 data "template_file" "assume_role_lambda" {
