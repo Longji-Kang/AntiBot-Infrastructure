@@ -32,6 +32,6 @@ data "template_file" "website_s3_policy" {
   }
 }
 
-data "template_file" "api_gateway_logging" {
-  template = file("${path.module}/policies/api_gateway_logging.json")
+data "template_file" "admin_lambda_role_policy" {
+  template = file("${path.module}/policies/lambda_execution.json")
 }
