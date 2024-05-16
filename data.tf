@@ -12,6 +12,14 @@ data "template_file" "assume_role_lambda" {
     }
 }
 
+data "template_file" "assume_role_apigateway" {
+    template = file("${path.module}/policies/assume_role.json")
+
+    vars = {
+        service = "apigateway.amazonaws.com"
+    }
+}
+
 
 data "template_file" "website_s3_policy" {
   template = file("${path.module}/policies/s3_website_access.json")
@@ -22,4 +30,8 @@ data "template_file" "website_s3_policy" {
     dev_role_arn        = local.dev_role_arn
     admin_role_arn      = local.admin_arn
   }
+}
+
+data "template_file" "api_gateway_logging" {
+  template = file("${path.module}/policies/api_gateway_logging.json")
 }
