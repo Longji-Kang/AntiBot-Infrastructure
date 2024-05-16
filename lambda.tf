@@ -1,5 +1,9 @@
 # Upload and Admin API Lambda functions
 resource "aws_lambda_function" "admin_upload_function" {
+  depends_on = [ 
+    aws_efs_mount_target.efs_mount
+  ]
+
   function_name = "${local.naming_prefix}${var.admin_upload_function_name}"
 	role          = aws_iam_role.admin_lambda_role.arn
 
@@ -16,6 +20,22 @@ resource "aws_lambda_function" "admin_upload_function" {
 		s3_folder = "definitions"
 	  }
 	}
+
+	vpc_config {
+	  subnet_ids = [
+		local.priv_subnet_a,
+		local.priv_subnet_b
+	  ]
+
+	  security_group_ids = [
+		aws_security_group.lambda_sg.id
+	  ]
+	}
+
+  file_system_config {
+    arn = aws_efs_access_point.efs_ap.arn
+    local_mount_path = "/mnt/lambda"
+  }
 }
 
 resource "aws_lambda_permission" "admin_gateway_permission" {
