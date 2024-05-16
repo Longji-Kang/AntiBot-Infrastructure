@@ -9,3 +9,5 @@ admin_api_stage_name = "deployment-stage"
 delivery_function_name = "update-delivery-lambda"
 delivery_lambda_role_name = "delivery-lambda-role"
 cloudfront_role_name = "cloudfront-role"
+
+dynamo_table_name = "definitions-table"
