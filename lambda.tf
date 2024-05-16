@@ -8,6 +8,12 @@ resource "aws_lambda_function" "admin_upload_function" {
 
 	handler = "lambda.handler"
 	runtime = "python3.12"
+
+	environment {
+	  variables = {
+		pass = var.admin_pass
+	  }
+	}
 }
 
 resource "aws_lambda_permission" "admin_gateway_permission" {
