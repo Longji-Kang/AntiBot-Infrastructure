@@ -16,9 +16,11 @@ resource "aws_lambda_function" "admin_upload_function" {
 
 	environment {
 	  variables = {
-		pass = var.admin_pass
-		s3_bucket = aws_s3_bucket.storage_bucket.id
-		s3_folder = "definitions"
+      pass         = var.admin_pass
+      s3_bucket    = aws_s3_bucket.storage_bucket.id
+      s3_folder 	 = "definitions"
+      url_base     = "https://${aws_s3_bucket.storage_bucket.id}.s3.eu-west-1.amazonaws.com/definitions/"
+      dynamo_table = aws_dynamodb_table.version_db.id
 	  }
 	}
 
@@ -60,6 +62,12 @@ resource "aws_lambda_function" "delivery_function" {
 
 	handler = "lambda.handler"
 	runtime = "python3.12"
+
+  environment {
+    variables = {
+      dynamo_table = aws_dynamodb_table.version_db.id
+    }
+  }
 }
 
 resource "aws_lambda_permission" "delivery_gateway_permission" {

@@ -16,7 +16,7 @@
                     "${admin_user}"
                 ]
             },
-            "Action": "s3*",
+            "Action": "s3:*",
             "Resource": "arn:aws:s3:::longji-definitions-storage-bucket/definitions/*"
         }
     ]
