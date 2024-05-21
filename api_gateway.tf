@@ -36,7 +36,7 @@ resource "aws_api_gateway_method_response" "post_response" {
 
   response_parameters = {
     Access-Control-Allow-Origin = true
-    Content-Type = True
+    Content-Type = true
   }
 }
 
