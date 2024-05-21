@@ -60,6 +60,14 @@ resource "aws_s3_object" "delivery_lambda_object" {
   etag   = filemd5("./lambda_base/code.zip") 
 }
 
+# Definitions File
+resource "aws_s3_object" "delivery_clean_csv" {
+  bucket = aws_s3_bucket.storage_bucket.id
+  key    = local.definitions_location
+  source = "./clean.csv"
+  etag   = filemd5("./clean.csv")
+}
+
 # Admin Portal Website Bucket
 resource "aws_s3_bucket" "website_bucket" {
   bucket = local.website_bucket_name

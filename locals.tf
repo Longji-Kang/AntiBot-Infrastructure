@@ -9,6 +9,7 @@ locals {
 
     admin_lambda_code_location = "lambda/admin/code.zip"
     delivery_lambda_code_location = "lambda/delivery/code.zip"
+    definitions_location = "definitions/clean.csv"
 
     admin_arn    = "arn:aws:iam::296274010522:user/longji-github-user"
     dev_role_arn = "arn:aws:iam::296274010522:role/aws-reserved/sso.amazonaws.com/eu-west-1/AWSReservedSSO_DeveloperAccess_a4a6262b8ec5160a"
