@@ -53,10 +53,6 @@ resource "aws_api_gateway_deployment" "admin_api_login_deployment" {
   ]
 
   rest_api_id = aws_api_gateway_rest_api.backend_api.id
-
-  triggers = {
-    redeployment = sha1(jsonencode(aws_api_gateway_rest_api.backend_api.body))
-  }
 }
 
 resource "aws_api_gateway_stage" "admin_api_stage" {
