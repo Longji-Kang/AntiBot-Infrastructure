@@ -27,6 +27,23 @@ resource "aws_api_gateway_integration" "admin_api_login_integration" {
   uri                     = aws_lambda_function.admin_upload_function.invoke_arn
 }
 
+resource "aws_api_gateway_method_response" "post_response" {
+  rest_api_id = aws_api_gateway_rest_api.backend_api.id
+  resource_id = aws_api_gateway_resource.admin_api_login_resource.id
+  http_method = "POST"
+
+  status_code = 200
+
+  response_models = {
+    "application/json" = "Empty"
+  }
+
+  response_parameters = {
+    "method.response.header.Access-Control-Allow-Origin" = true
+    "method.response.header.Content-Type" = true
+  }
+}
+
 resource "aws_api_gateway_deployment" "admin_api_login_deployment" {
   depends_on = [ 
     aws_api_gateway_method.admin_api_login_method,
@@ -36,10 +53,6 @@ resource "aws_api_gateway_deployment" "admin_api_login_deployment" {
   ]
 
   rest_api_id = aws_api_gateway_rest_api.backend_api.id
-
-  triggers = {
-    redeployment = sha1(jsonencode(aws_api_gateway_rest_api.backend_api.body))
-  }
 }
 
 resource "aws_api_gateway_stage" "admin_api_stage" {
