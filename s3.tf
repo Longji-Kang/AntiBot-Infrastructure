@@ -60,12 +60,20 @@ resource "aws_s3_object" "delivery_lambda_object" {
   etag   = filemd5("./lambda_base/code.zip") 
 }
 
-# Definitions File
+# Hash File
 resource "aws_s3_object" "delivery_clean_csv" {
   bucket = aws_s3_bucket.storage_bucket.id
   key    = local.definitions_location
   source = "./clean.csv"
   etag   = filemd5("./clean.csv")
+}
+
+# Features File
+resource "aws_s3_object" "delivery_features_pl" {
+  bucket = aws_s3_bucket.storage_bucket.id
+  key    = local.features_location
+  source = "./features.pkl"
+  etag   = filemd5("./features.pkl")
 }
 
 # Admin Portal Website Bucket
